@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دینامیت؛ اختراعی با دو چهره</title>
+<style>
+:root{--bg:#08060d;--panel:#120d1c;--purple:#a855f7;--violet:#7c3aed;--pink:#e879f9;--text:#f5efff;--muted:#c6b7d8;--line:#38234e}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",sans-serif;overflow:hidden}
+body{background:radial-gradient(ellipse at 75% 15%,#29103d 0,transparent 36%),radial-gradient(ellipse at 15% 85%,#1b0b2a 0,transparent 32%),#08060d}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.2;background-image:linear-gradient(#8b5cf6 1px,transparent 1px),linear-gradient(90deg,#8b5cf6 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(transparent,#000,transparent)}
+#app{height:100%;display:flex;flex-direction:column;position:relative}
+.top{display:flex;align-items:center;justify-content:space-between;padding:18px 4vw;gap:16px}
+.brand{font-size:12px;letter-spacing:2px;color:#c4a5fd}.progress{height:4px;background:#21142e;flex:1;max-width:360px;border-radius:9px;overflow:hidden}.progress span{display:block;height:100%;width:8.333%;background:linear-gradient(90deg,var(--violet),var(--pink));transition:width .35s}
+.slide-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px 5vw 20px}
+.slide{width:min(1120px,100%);max-height:100%;overflow:auto;animation:enter .4s ease both;padding:clamp(20px,4vw,48px);border:1px solid #4b2b66;border-radius:26px;background:linear-gradient(135deg,rgba(25,15,37,.94),rgba(10,8,15,.92));box-shadow:0 25px 90px #0008,0 0 45px #7c3aed12;position:relative}
+.slide:after{content:"";position:absolute;top:0;right:0;width:150px;height:3px;background:linear-gradient(90deg,transparent,var(--pink),var(--purple))}
+.kicker{font-size:12px;color:#d8b4fe;letter-spacing:1.4px;margin-bottom:16px}
+h1{font-size:clamp(36px,6vw,76px);line-height:1.2;margin:0 0 20px;font-weight:900;background:linear-gradient(100deg,#fff,#e9d5ff 45%,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(26px,3.4vw,43px);margin:0 0 20px;line-height:1.35;color:#f3e8ff}
+h3{font-size:18px;color:#e9d5ff;margin:0 0 10px}
+p{font-size:clamp(15px,1.5vw,19px);line-height:2;margin:0 0 14px;color:#e6dced}
+.lead{font-size:clamp(17px,2vw,23px);color:#e9d5ff;line-height:1.9;max-width:850px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.card{border:1px solid var(--line);background:#130d1ee8;border-radius:16px;padding:18px}
+.card p{font-size:15px;line-height:1.9;margin:0;color:#d9cce8}
+.pill{display:inline-block;border:1px solid #7544a0;border-radius:999px;padding:7px 12px;color:#e9d5ff;font-size:12px;margin:5px 5px 0 0}
+.big-number{font-size:clamp(60px,10vw,120px);font-weight:900;color:#c084fc;line-height:1}
+.quote{border-right:3px solid var(--pink);padding:12px 18px;background:#21122d;border-radius:8px;color:#f5d0fe;font-size:18px;line-height:1.9;margin-top:18px}
+.footer{display:flex;align-items:center;justify-content:space-between;padding:14px 4vw 20px;gap:14px}
+.nav{display:flex;align-items:center;gap:10px}
+button{font:inherit;cursor:pointer;color:var(--text);border:1px solid #7441a0;background:linear-gradient(135deg,#29133e,#160d22);border-radius:12px;padding:11px 17px;transition:transform .15s,border-color .15s,background .15s}
+button:hover{transform:translateY(-1px);border-color:#d8b4fe;background:#301744}
+button:focus-visible{outline:2px solid #e879f9;outline-offset:3px}
+button:disabled{opacity:.35;cursor:not-allowed;transform:none}
+#counter{font-size:13px;color:#c4b5d8;min-width:65px;text-align:center}
+#music{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:5;font-size:12px;padding:10px 12px;border-radius:10px;box-shadow:0 6px 24px #0008;background:#1a1025}
+#music:hover{transform:translateY(calc(-50% - 1px))}
+#hint{font-size:11px;color:#9f8caf}
+.cover-mark{font-size:13px;color:#c084fc;margin-bottom:18px}
+.two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:center}
+.orb{aspect-ratio:1;border-radius:50%;max-width:280px;margin:auto;background:radial-gradient(circle at 35% 30%,#e9d5ff,#a855f7 18%,#4c1d70 48%,#11091b 70%);box-shadow:0 0 40px #a855f766,0 0 100px #7c3aed33;position:relative}
+.orb:before,.orb:after{content:"";position:absolute;inset:-12%;border:1px solid #a855f766;border-radius:50%;transform:rotate(30deg) scaleY(.35)}
+.orb:after{transform:rotate(-40deg) scaleY(.5)}
+.small{font-size:13px!important;color:#b9a8ca!important}
+ul{margin:8px 0 16px;padding-right:24px;color:#e6dced;font-size:16px;line-height:2}
+li{padding-right:3px;margin-bottom:4px}
+a{color:#d8b4fe}
+@keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.top{padding:12px 4vw}.slide-wrap{padding:4px 3vw 10px}.slide{padding:22px 18px;border-radius:18px}.grid,.two-col{grid-template-columns:1fr}.orb{max-width:130px;order:-1}.footer{padding:10px 3vw 12px}.brand{font-size:10px}#music{left:8px;top:auto;bottom:74px;transform:none}#music:hover{transform:translateY(-1px)}p{line-height:1.85}.card{padding:14px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Animated 2D backdrop — decorative only; presentation content remains unchanged */
+.motion-backdrop{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;isolation:isolate}
+.motion-backdrop:before,.motion-backdrop:after{content:"";position:absolute;width:38vw;height:38vw;min-width:280px;min-height:280px;border-radius:50%;filter:blur(2px);opacity:.14}
+.motion-backdrop:before{left:-12vw;top:12%;border:1px solid #c084fc;box-shadow:0 0 0 24px #a855f708,0 0 0 48px #a855f708;animation:backGlow 18s ease-in-out infinite alternate}
+.motion-backdrop:after{right:-14vw;bottom:-16%;border:1px solid #e879f9;box-shadow:0 0 0 30px #e879f908,0 0 0 60px #e879f906;animation:backGlow 22s ease-in-out infinite alternate-reverse}
+#app{z-index:1}
+.float-shape{position:absolute;display:block;opacity:.28;will-change:transform;filter:drop-shadow(0 0 10px #a855f733)}
+.shape-ring{width:76px;height:76px;border:1.5px solid #c084fc;border-radius:50%;left:9%;top:22%;animation:floatA 16s ease-in-out infinite,spinSlow 28s linear infinite}
+.shape-ring:after{content:"";position:absolute;inset:12px;border:1px dashed #e879f9;border-radius:50%}
+.shape-diamond{width:28px;height:28px;border:1.5px solid #e879f9;transform:rotate(45deg);right:13%;top:25%;animation:floatB 13s ease-in-out infinite}
+.shape-orbit{width:100px;height:42px;border:1px solid #a78bfa;border-radius:50%;left:18%;bottom:15%;transform:rotate(-28deg);animation:floatC 19s ease-in-out infinite}
+.shape-orbit:after{content:"";position:absolute;width:9px;height:9px;right:10px;top:2px;background:#e879f9;border-radius:50%;box-shadow:0 0 16px #e879f9}
+.shape-circle{width:14px;height:14px;border-radius:50%;right:22%;bottom:20%;background:#a855f7;box-shadow:0 0 25px #a855f7;animation:floatA 11s ease-in-out infinite reverse}
+.shape-cross{font-size:28px;font-weight:200;color:#c4b5fd;left:48%;top:15%;animation:floatB 15s ease-in-out infinite}
+.shape-spark{font-size:30px;color:#e879f9;right:8%;bottom:15%;animation:twinkle 5s ease-in-out infinite,floatC 17s ease-in-out infinite}
+.shape-triangle{width:0;height:0;left:75%;top:62%;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:27px solid #a855f744;filter:drop-shadow(0 0 1px #c084fc);animation:floatA 18s ease-in-out infinite}
+.shape-dot{width:6px;height:6px;border-radius:50%;left:34%;top:72%;background:#e879f9;box-shadow:0 0 0 9px #e879f911,0 0 20px #e879f9;animation:floatB 12s ease-in-out infinite}
+.ring-two{width:34px;height:34px;right:36%;top:9%;animation-duration:20s,38s;opacity:.2}
+.cross-two{left:7%;top:68%;font-size:19px;animation-duration:19s}
+.slide{animation:slideEnter .72s cubic-bezier(.22,1,.36,1) both;will-change:transform,opacity;backface-visibility:hidden}
+.slide.is-forward{animation-name:slideForward}
+.slide.is-backward{animation-name:slideBackward}
+.progress span{transition:width .75s cubic-bezier(.22,1,.36,1)}
+button{transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .3s,background .3s,box-shadow .3s}
+button:hover{box-shadow:0 7px 24px #a855f726}
+.card,.quote,.pill{transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s,background-color .35s}
+.card:hover{transform:translateY(-3px);border-color:#7544a0}
+@keyframes slideEnter{from{opacity:0;transform:translate3d(0,18px,0) scale(.992);filter:blur(3px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes slideForward{from{opacity:0;transform:translate3d(-34px,8px,0) scale(.99);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes slideBackward{from{opacity:0;transform:translate3d(34px,8px,0) scale(.99);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes floatA{0%,100%{translate:0 0}50%{translate:12px -24px}}
+@keyframes floatB{0%,100%{translate:0 0;rotate:0deg}50%{translate:-15px 18px;rotate:90deg}}
+@keyframes floatC{0%,100%{translate:0 0;rotate:-8deg}50%{translate:18px -12px;rotate:8deg}}
+@keyframes spinSlow{to{rotate:360deg}}
+@keyframes twinkle{0%,100%{opacity:.18;scale:.85}50%{opacity:.6;scale:1.12}}
+@keyframes backGlow{from{transform:translate3d(0,-2%,0) scale(.92)}to{transform:translate3d(4%,3%,0) scale(1.08)}}
+@media(max-width:700px){.float-shape{opacity:.16}.shape-ring{width:48px;height:48px}.shape-orbit{width:64px;height:28px}.shape-cross{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.float-shape,.motion-backdrop:before,.motion-backdrop:after{animation:none!important}.slide{animation:none!important;filter:none!important}}
+
+
+/* Extra animated 2D icons distributed around the slide canvas */
+.slide-decorations{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.slide-decorations span{position:absolute;display:block;opacity:.72;will-change:transform;filter:drop-shadow(0 5px 12px #0002)}
+.decor-stick{left:4.5%;top:31%;width:19px;height:66px;border-radius:7px 7px 4px 4px;background:linear-gradient(90deg,#b91c1c,#ef4444 48%,#991b1b);box-shadow:inset 2px 0 #ffffff40,0 0 22px #ef444455;transform:rotate(-13deg);animation:decorBob 5.6s ease-in-out infinite}
+.decor-stick:before{content:"";position:absolute;top:-7px;left:5px;width:9px;height:11px;border-radius:3px 3px 1px 1px;background:#d1d5db}
+.decor-stick:after{content:"";position:absolute;top:-14px;left:8px;width:3px;height:9px;border-radius:3px;background:#fbbf24;box-shadow:0 0 10px #f59e0b;animation:fuseGlow 1.8s ease-in-out infinite}
+.decor-stick i{position:absolute;left:3px;right:3px;top:16px;height:2px;background:#ffffff9c;box-shadow:0 9px #ffffff66,0 18px #ffffff66,0 27px #ffffff66}
+.decor-stick b{position:absolute;left:2px;right:2px;bottom:5px;height:13px;border-radius:2px;background:#991b1b}
+.decor-flame{right:7%;top:19%;font-size:30px;color:#f59e0b;animation:decorBob 6s ease-in-out infinite reverse,decorTwinkle 3.6s ease-in-out infinite}
+.decor-gear{right:5%;bottom:22%;font-size:34px;color:#a78bfa;animation:gearDrift 17s linear infinite}
+.decor-bolt{left:10%;bottom:17%;font-size:38px;color:#fbbf24;animation:decorBob 7s ease-in-out infinite,decorTwinkle 4s ease-in-out infinite}
+.decor-orbit{left:78%;top:47%;width:46px;height:22px;border:1px solid #a78bfa;border-radius:50%;transform:rotate(-30deg);animation:decorOrbit 13s linear infinite}
+.decor-orbit i{position:absolute;width:7px;height:7px;right:4px;top:1px;background:#e879f9;border-radius:50%;box-shadow:0 0 10px #e879f9}
+.decor-star{left:27%;top:12%;font-size:29px;color:#e879f9;animation:decorBob 8s ease-in-out infinite,decorTwinkle 4.5s ease-in-out infinite}
+.decor-mini-stick{right:19%;bottom:12%;width:12px;height:43px;border-radius:5px;background:linear-gradient(90deg,#b91c1c,#ef4444,#991b1b);transform:rotate(17deg);animation:decorBob 6.4s ease-in-out infinite;animation-delay:-2s}
+.decor-mini-stick:before{content:"";position:absolute;top:-5px;left:3px;width:6px;height:7px;border-radius:2px;background:#d1d5db}
+.decor-mini-stick:after{content:"";position:absolute;top:-10px;left:5px;width:2px;height:6px;background:#fbbf24;box-shadow:0 0 8px #f59e0b}
+.decor-mini-stick i{position:absolute;top:11px;left:2px;right:2px;height:2px;background:#ffffff9c;box-shadow:0 7px #ffffff66,0 14px #ffffff66}
+.decor-mini-stick b{position:absolute;bottom:3px;left:2px;right:2px;height:8px;background:#991b1b}
+.decor-bubble{right:31%;top:13%;width:12px;height:12px;border:1px solid #c084fc;border-radius:50%;animation:decorBob 9s ease-in-out infinite}
+.decor-cross{left:45%;bottom:12%;font-size:23px;color:#c4b5fd;animation:decorBob 7s ease-in-out infinite reverse}
+@keyframes decorBob{0%,100%{translate:0 0}50%{translate:0 -17px}}
+@keyframes fuseGlow{0%,100%{opacity:.5;scale:.85}50%{opacity:1;scale:1.25}}
+@keyframes decorTwinkle{0%,100%{opacity:.28}50%{opacity:.85}}
+@keyframes gearDrift{to{rotate:360deg;translate:0 -9px}}
+@keyframes decorOrbit{0%{rotate:0deg;translate:0 0}50%{translate:-8px -12px}100%{rotate:360deg;translate:0 0}}
+@media(max-width:700px){.decor-stick{left:2%;top:18%;scale:.75}.decor-mini-stick{right:7%;scale:.75}.decor-gear{font-size:25px}.slide-decorations span{opacity:.4}}
+@media(prefers-reduced-motion:reduce){.slide-decorations span{animation:none!important}}
+
+
+/* Large, slide-specific illustrations are part of the slide, not the backdrop. */
+.slide{width:min(1420px,100%);height:100%;max-height:100%;overflow:auto;padding:clamp(18px,2.3vw,34px);}
+.slide-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,35%);gap:clamp(16px,2.5vw,38px);align-items:start;min-height:100%}
+.slide-copy{min-width:0}.slide-visual{position:sticky;top:8px;align-self:center;min-width:0;display:grid;place-items:center;min-height:300px;border-radius:24px;background:radial-gradient(circle at 50% 45%,#6d28d940,transparent 70%);overflow:hidden}
+.slide-visual svg{width:100%;height:auto;max-height:min(62vh,520px);filter:drop-shadow(0 18px 30px #0008);animation:visualFloat 6s ease-in-out infinite}
+@keyframes visualFloat{50%{transform:translateY(-9px) rotate(1deg)}}
+.slide-decorations{display:none}.slide-wrap{padding:5px 3vw 9px;min-height:0}.top{padding:10px 3vw}.footer{padding:8px 3vw 12px}h1{font-size:clamp(32px,4.3vw,60px)}h2{font-size:clamp(25px,2.7vw,39px)}p{font-size:clamp(14px,1.18vw,17px);line-height:1.75}.card{padding:13px}.card p{font-size:14px;line-height:1.7}.grid{gap:10px;margin:12px 0}.quote{font-size:16px;line-height:1.7;margin-top:12px}.kicker{margin-bottom:10px}
+@media(max-width:850px){.slide-layout{grid-template-columns:1fr}.slide-visual{position:relative;min-height:150px;max-height:210px;grid-row:1}.slide-visual svg{max-height:205px}.slide{height:100%;padding:20px}.two-col{grid-template-columns:1fr}.orb{display:none}}
+@media(max-height:760px) and (min-width:851px){.slide{padding:18px 25px}.slide-visual svg{max-height:53vh}h2{margin-bottom:10px}.top{padding:6px 3vw}.footer{padding:6px 3vw}.slide-wrap{padding:3px 3vw}}
+@media(prefers-reduced-motion:reduce){.slide-visual svg{animation:none}}
+</style>
+</head>
+<body>
+<div class="slide-decorations" aria-hidden="true">
+  <span class="decor-stick"><i></i><b></b></span>
+  <span class="decor-flame">✦</span>
+  <span class="decor-gear">⚙</span>
+  <span class="decor-bolt">ϟ</span>
+  <span class="decor-orbit"><i></i></span>
+  <span class="decor-star">✧</span>
+  <span class="decor-mini-stick"><i></i><b></b></span>
+  <span class="decor-bubble"></span>
+  <span class="decor-cross">👁</span>
+</div>
+<div class="motion-backdrop" aria-hidden="true">
+  <span class="float-shape shape-ring"></span>
+  <span class="float-shape shape-diamond"></span>
+  <span class="float-shape shape-orbit"></span>
+  <span class="float-shape shape-circle"></span>
+  <span class="float-shape shape-cross">＋</span>
+  <span class="float-shape shape-spark">✦</span>
+  <span class="float-shape shape-triangle"></span>
+  <span class="float-shape shape-dot"></span>
+  <span class="float-shape shape-ring ring-two"></span>
+  <span class="float-shape shape-cross cross-two">＋</span>
+</div>
+<div id="app">
+  <header class="top">
+    <div class="brand">SCIENCE / HISTORY <span style="color:#8b5cf6">◆</span></div>
+    <div class="progress" aria-label="پیشرفت ارائه"><span id="progress"></span></div>
+    <div class="brand" id="section">01 — 12</div>
+  </header>
+  <main class="slide-wrap"><article class="slide" id="slide" aria-live="polite"></article></main>
+  <footer class="footer">
+    <div id="hint">برای جابه‌جایی از کلیدهای ← و → استفاده کن</div>
+    <div class="nav">
+      <button id="prev" aria-label="اسلاید قبلی">→ قبلی</button>
+      <span id="counter">۱ از ۱۲</span>
+      <button id="next" aria-label="اسلاید بعدی">بعدی ←</button>
+    </div>
+  </footer>
+</div>
+<button id="music" type="button" aria-pressed="false">وصل آهنگ</button>
+<audio id="audio" src="assets/ghgh.mp3" preload="none" loop></audio>
+<audio id="sfx" src="assets/muo.mp3" preload="auto"></audio>
+<script>
+const slides = [
+{tag:"پروندهٔ علمی",title:"دینامیت؛ اختراعی با دو چهره",lead:"از یک نوآوری صنعتی در قرن نوزدهم تا پیامدهایی که نشان داد قدرت فناوری، مسئولیت بزرگی هم به همراه دارد.",body:`<div class="two-col"><div><p>دینامیت یکی از شناخته‌شده‌ترین اختراعات تاریخ مواد منفجره است. این اختراع بر معدن‌کاری، تونل‌سازی و برخی پروژه‌های عمرانی اثر گذاشت؛ اما قدرت تخریبی آن نیز خطرها و سوءاستفاده‌های جدی به همراه داشت.</p><p>در این ارائه تاریخچه، اصول علمی کلی، کاربردهای صنعتی و پیامدهای انسانی این فناوری را بررسی می‌کنیم.</p><span class="pill">تاریخ</span><span class="pill">علم</span><span class="pill">مسئولیت</span></div><div class="orb" aria-hidden="true"></div></div><div class="quote">پرسش اصلی: آیا ارزش یک اختراع فقط به توانایی آن است، یا به شیوهٔ استفاده از آن هم بستگی دارد؟</div>`},
+{tag:"بخش ۰۱ / زمینهٔ تاریخی",title:"جهان پیش از اختراع دینامیت",body:`<p>در قرن نوزدهم، بسیاری از کشورها در حال گسترش راه‌آهن، جاده‌ها، معدن‌ها و مسیرهای ارتباطی بودند. عبور از کوه‌ها یا شکستن سنگ‌های سخت برای ساخت تونل و استخراج مواد معدنی، کاری دشوار و زمان‌بر بود.</p><p>ابزارهای دستی برای همهٔ پروژه‌ها کافی نبودند و روش‌های انفجاری موجود نیز خطرهای قابل‌توجهی داشتند. حمل‌ونقل و استفاده از مواد پرانرژی، بدون دانش و کنترل مناسب، می‌توانست به حوادث مرگبار منجر شود.</p><p>با رشد صنعت، پژوهشگران به دنبال راه‌هایی بودند تا عملیات سنگ‌برداری در شرایط تخصصی کارآمدتر و قابل‌کنترل‌تر انجام شود. همین نیاز، بخشی از زمینهٔ تاریخی اختراع دینامیت را شکل داد.</p><div class="grid"><div class="card"><h3>نیاز مهندسی</h3><p>ساخت تونل، راه‌آهن و دسترسی به منابع معدنی.</p></div><div class="card"><h3>چالش ایمنی</h3><p>کاهش خطرهای حمل‌ونقل و استفاده از مواد انفجاری.</p></div></div>`},
+{tag:"بخش ۰۲ / مخترع",title:"آلفرد نوبل؛ دانشمند و مخترع",body:`<p>آلفرد نوبل در سال ۱۸۳۳ در استکهلم سوئد به دنیا آمد. او شیمی‌دان، مهندس و مخترعی بود که بخش مهمی از فعالیت حرفه‌ای خود را به بررسی مواد انفجاری و کاربردهای صنعتی آن‌ها اختصاص داد.</p><p>در زمان فعالیت نوبل، صنعت و مهندسی با سرعت زیادی تغییر می‌کردند و تقاضا برای استخراج مواد معدنی و ساخت زیرساخت‌ها افزایش داشت. پژوهش‌های او در همین فضای علمی و صنعتی شکل گرفت.</p><p>نوبل در سال ۱۸۶۷ اختراع دینامیت را به ثبت رساند. نام او بعدها به‌دلیل وصیت‌نامه‌اش و بنیان‌گذاری جوایز نوبل نیز در سراسر جهان شناخته شد. زندگی او یادآور پیوند پیچیدهٔ علم، صنعت، ثروت و مسئولیت اجتماعی است.</p><div class="quote">یک مخترع می‌تواند در تاریخ علم ماندگار شود؛ اما ارزیابی میراث او نیازمند بررسی هم دستاوردها و هم پیامدهاست.</div>`},
+{tag:"بخش ۰۳ / شکل‌گیری اختراع",title:"دینامیت چگونه وارد تاریخ شد؟",body:`<p>پیش از اختراع دینامیت، نیتروگلیسیرین به‌عنوان ماده‌ای بسیار پرانرژی شناخته شده بود. بااین‌حال، حساسیت و خطرهای مرتبط با آن باعث می‌شد جابه‌جایی و استفاده از آن دشوار باشد.</p><p>آلفرد نوبل به دنبال راهی بود که این ماده برای کاربردهای صنعتی قابل‌کنترل‌تر شود. او در سال ۱۸۶۷ دینامیت را به ثبت رساند؛ اختراعی که به‌تدریج در بخش‌هایی از معدن‌کاری و مهندسی مورد استفاده قرار گرفت.</p><p>اهمیت تاریخی این اتفاق تنها در قدرت انفجاری نبود؛ بلکه نشان می‌داد طراحی، نگهداری و کنترل خطرها باید بخش مهمی از مهندسی مواد پرانرژی باشد. البته دینامیت همچنان خطرناک بود و اختراع آن به معنای بی‌خطر شدن مواد منفجره نبود.</p><p class="small">تاریخ ثبت اختراع و زندگی نوبل در منابع تاریخی بنیاد نوبل و مراجع دانشنامه‌ای ثبت شده‌اند.</p>`},
+{tag:"بخش ۰۴ / علم",title:"علم پشت دینامیت",body:`<p>برای درک کلی عملکرد مواد منفجره، باید مفهوم انرژی شیمیایی را بشناسیم. مواد گوناگون دارای انرژی‌اند و برخی واکنش‌های شیمیایی می‌توانند انرژی را در مدت کوتاهی آزاد کنند.</p><p>در یک انفجار، آزادشدن سریع انرژی می‌تواند باعث گرم‌شدن گازها و افزایش ناگهانی فشار شود. گسترش سریع گازها موج فشاری ایجاد می‌کند که ممکن است به اشیا و سازه‌های اطراف آسیب برساند.</p><p>سرعت واکنش، شرایط محیط و ویژگی‌های ماده در رفتار آن نقش دارند. به همین دلیل، مواد انفجاری را نمی‌توان تنها از روی ظاهر یا اندازه‌شان ارزیابی کرد.</p><div class="grid"><div class="card"><h3>انرژی</h3><p>در واکنش‌های شیمیایی ممکن است به شکل‌های دیگری تبدیل و آزاد شود.</p></div><div class="card"><h3>فشار</h3><p>افزایش سریع فشار می‌تواند موجی ایجاد کند که به محیط اطراف آسیب بزند.</p></div></div><p class="small">این توضیح مفهومی است و شامل دستور ساخت، ترکیب‌بندی یا روش استفاده از مواد منفجره نیست.</p>`},
+{tag:"بخش ۰۵ / فناوری",title:"چه چیزی دینامیت را متفاوت کرد؟",body:`<p>در زمان معرفی دینامیت، یکی از مسائل مهم مهندسی، یافتن راه‌هایی برای کاربرد صنعتی کنترل‌شده‌ترِ مواد پرانرژی بود. دینامیت در مقایسه با نیتروگلیسیرین خالص، برای برخی کاربردهای آن زمان شکل عملی‌تری فراهم کرد.</p><p>این پیشرفت به معنای بی‌خطر بودن ماده نبود. مواد منفجره همچنان به آموزش تخصصی، شرایط نگهداری مناسب، مجوزهای قانونی و رویه‌های دقیق ایمنی نیاز دارند.</p><p>درس گسترده‌تر این اختراع برای فناوری آن است که طراحی موفق فقط به قدرت یا بازدهی مربوط نمی‌شود؛ قابلیت کنترل، خطرهای احتمالی و پیامدهای انسانی نیز باید در نظر گرفته شوند.</p><div class="quote">«قابل‌کنترل‌تر» به معنی «بی‌خطر» نیست.</div>`},
+{tag:"بخش ۰۶ / کاربردهای صنعتی",title:"کاربردها در معدن‌کاری و ساخت‌وساز",body:`<p>از کاربردهای تاریخی دینامیت می‌توان به بعضی عملیات معدن‌کاری و سنگ‌برداری اشاره کرد. استخراج مواد معدنی گاهی مستلزم جابه‌جایی حجم زیادی از سنگ است و مواد منفجرهٔ صنعتی در برخی شرایط تخصصی برای این منظور به کار رفته‌اند.</p><p>در پروژه‌های تونل‌سازی و راه‌سازی نیز فناوری‌های گوناگون به مهندسان کمک کرده‌اند تا از موانع طبیعی عبور کنند. انتخاب روش به جنس زمین، مقیاس پروژه، قوانین، هزینه‌ها و خطرهای محیطی وابسته است.</p><p>امروزه روش‌هایی مانند ماشین‌های حفاری تونل و تجهیزات مکانیکی پیشرفته نیز در بسیاری از پروژه‌ها استفاده می‌شوند. بنابراین، دینامیت بخشی از تاریخ مهندسی است، نه راه‌حل همیشگی برای هر پروژه.</p><div class="grid"><div class="card"><h3>معدن‌کاری</h3><p>دسترسی تخصصی به برخی منابع زیرزمینی.</p></div><div class="card"><h3>زیرساخت</h3><p>کمک به برخی عملیات سنگ‌برداری و پروژه‌های عمرانی.</p></div></div>`},
+{tag:"بخش ۰۷ / پیامدهای دوگانه",title:"سوءاستفاده از دینامیت؛ روی تاریک یک اختراع",body:`<p>دینامیت در برخی فعالیت‌های صنعتی و عمرانی به کار گرفته شد، اما قدرت تخریبی آن امکان استفادهٔ مخرب را نیز فراهم می‌کرد. تاریخ این فناوری نشان می‌دهد که یک ابزار قدرتمند می‌تواند، بسته به هدف و شرایط استفاده، پیامدهایی کاملاً متفاوت داشته باشد.</p><div class="grid"><div class="card"><h3>کاربردهای سازنده</h3><p>در شرایط تخصصی، مواد منفجره می‌توانند به برخی عملیات معدن‌کاری، سنگ‌برداری و پروژه‌های عمرانی کمک کنند. این کاربردها همواره نیازمند ارزیابی خطر و رعایت مقررات‌اند.</p></div><div class="card"><h3>پیامدهای مخرب</h3><p>استفادهٔ نادرست یا خشونت‌آمیز می‌تواند باعث تخریب ساختمان‌ها و زیرساخت‌ها، صدمات انسانی، آوارگی مردم و آسیب‌های زیست‌محیطی شود.</p></div></div><h3>تجهیزات نظامی و آسیب به غیرنظامیان</h3><p>مواد منفجره در برخی مهمات و تجهیزات نظامی استفاده می‌شوند. انفجارها ممکن است به تجهیزات و مواضع آسیب بزنند، اما همچنین خطر جدی برای مردم، خانه‌ها، بیمارستان‌ها و خدمات ضروری ایجاد می‌کنند. پیامدهای درگیری‌ها می‌تواند مدت‌ها پس از پایان نبرد ادامه پیدا کند.</p><p>حقوق بشردوستانهٔ بین‌المللی از غیرنظامیان حمایت می‌کند و حملات عمدی علیه آنان را ممنوع می‌داند. طرف‌های درگیر باید میان اهداف نظامی و غیرنظامیان تمایز قائل شوند و اقدامات لازم را برای محدودکردن آسیب به مردم انجام دهند.</p><div class="quote">ارزیابی یک اختراع فقط با دستاوردهایش کامل نمی‌شود؛ خطرها و هزینه‌های انسانی آن نیز بخشی از تاریخ‌اند.</div>`},
+{tag:"بخش ۰۸ / ایمنی و اخلاق",title:"خطرات و مسئولیت انسانی",body:`<p>دینامیت ماده‌ای بسیار خطرناک است. انفجار ناخواسته می‌تواند به جراحات شدید، مرگ، تخریب سازه‌ها و آلودگی محیطی منجر شود. نگهداری، جابه‌جایی و استفاده از مواد انفجاری باید تنها به افراد دارای صلاحیت و مطابق قوانین سپرده شود.</p><p>خطر فقط به زمان انفجار محدود نیست: تخریب زیرساخت‌ها ممکن است دسترسی مردم به آب، برق، خدمات درمانی و مسکن را مختل کند. بازسازی مناطق آسیب‌دیده نیز می‌تواند هزینه‌بر و طولانی باشد.</p><p>از دید اخلاقی، دانشمندان، مهندسان، تصمیم‌گیران و کاربران فناوری باید پیامدهای احتمالی کار خود را جدی بگیرند. در کنار نوآوری، حفاظت از جان انسان‌ها و محیط‌زیست باید اولویت داشته باشد.</p><div class="card"><h3>اگر ماده‌ای مشکوک پیدا شد</h3><p>به آن دست نزن، فاصله بگیر و موضوع را به مسئولان یا نیروهای امدادی اطلاع بده.</p></div>`},
+{tag:"بخش ۰۹ / میراث نوبل",title:"از آلفرد نوبل تا جوایز نوبل",body:`<p>آلفرد نوبل در سال ۱۸۹۶ درگذشت. در وصیت‌نامهٔ خود، بخش عمده‌ای از دارایی‌اش را برای تأسیس جوایزی اختصاص داد که به افراد دارای دستاوردهای برجسته اهدا شوند.</p><p>پس از انجام مقدمات لازم، نخستین جوایز نوبل در سال ۱۹۰۱ اهدا شدند. این جوایز در حوزه‌هایی از جمله فیزیک، شیمی، پزشکی یا فیزیولوژی، ادبیات و صلح شناخته می‌شوند. جایزهٔ علوم اقتصادی بعدها به یاد آلفرد نوبل بنیان‌گذاری شد.</p><p>این بخش از زندگی نوبل، میراثی متفاوت از اختراع دینامیت را نشان می‌دهد: حمایت از دانش، فرهنگ و تلاش برای صلح. بااین‌حال، تاریخ او همچنان یادآور این پرسش است که مخترعان و جوامع چگونه باید با پیامدهای فناوری روبه‌رو شوند.</p><div class="quote">میراث یک انسان می‌تواند چندوجهی باشد؛ بررسی تاریخی به ما کمک می‌کند این پیچیدگی را ببینیم.</div>`},
+{tag:"بخش ۱۰ / فناوری امروز",title:"از گذشته تا مهندسی مدرن",body:`<p>از قرن نوزدهم تاکنون، فناوری حفاری و ساخت‌وساز پیشرفت چشمگیری داشته است. ماشین‌های حفاری تونل، ابزارهای دقیق اندازه‌گیری، مدل‌سازی زمین و سامانه‌های پایش ایمنی در بسیاری از پروژه‌ها نقش مهمی دارند.</p><p>روش مناسب به ویژگی‌های زمین و نیاز پروژه بستگی دارد. در برخی شرایط، حفاری مکانیکی می‌تواند جایگزین مناسبی باشد؛ در پروژه‌های دیگر نیز روش‌های تخصصی متفاوتی بررسی می‌شوند. هیچ روش واحدی برای همهٔ محیط‌ها بهترین نیست.</p><p>تجربهٔ تاریخی دینامیت به مهندسان یادآوری می‌کند که نوآوری باید همراه با سنجش خطر، قوانین روشن، آموزش و توجه به جامعه باشد. پیشرفت واقعی فقط سریع‌تر ساختن نیست؛ ساختن ایمن‌تر و مسئولانه‌تر هم هست.</p><div class="grid"><div class="card"><h3>فناوری</h3><p>ماشین‌آلات و ابزارهای اندازه‌گیری دقیق‌تر.</p></div><div class="card"><h3>مسئولیت</h3><p>کاهش خطر برای کارکنان، ساکنان و محیط‌زیست.</p></div></div>`},
+{tag:"پایان / نتیجه‌گیری",title:"قدرت فناوری، مسئولیت انسان",body:`<p>دینامیت یکی از اختراعات مهم قرن نوزدهم بود که در تاریخ معدن‌کاری و برخی پروژه‌های عمرانی اثر گذاشت. آلفرد نوبل با ثبت این اختراع در سال ۱۸۶۷ به چهره‌ای شناخته‌شده در تاریخ فناوری تبدیل شد.</p><p>بااین‌حال، قدرت تخریبی مواد منفجره نشان می‌دهد که فناوری می‌تواند پیامدهای منفی جدی داشته باشد؛ از حوادث صنعتی تا آسیب به مردم و زیرساخت‌ها در درگیری‌های مسلحانه. به همین دلیل، دانش علمی باید با مسئولیت‌پذیری، رعایت قوانین و اصول انسانی همراه باشد.</p><div class="quote">پرسش برای کلاس: آیا یک اختراع را باید بر اساس هدف اولیه‌اش قضاوت کرد یا بر اساس تمام پیامدهایی که در جهان واقعی ایجاد می‌کند؟</div><h3 style="margin-top:22px">منابع برای مطالعهٔ بیشتر</h3><ul><li><a href="https://www.nobelprize.org/alfred-nobel/" target="_blank" rel="noopener">بنیاد جایزهٔ نوبل — زندگی آلفرد نوبل</a></li><li><a href="https://www.britannica.com/biography/Alfred-Nobel" target="_blank" rel="noopener">دانشنامهٔ بریتانیکا — زندگی و اختراعات آلفرد نوبل</a></li><li><a href="https://www.icrc.org/en/war-and-law" target="_blank" rel="noopener">کمیتهٔ بین‌المللی صلیب سرخ — جنگ و حقوق بشردوستانه</a></li><li><a href="https://www.nobelprize.org/prizes/" target="_blank" rel="noopener">وب‌سایت رسمی جوایز نوبل</a></li></ul><p class="small">این ارائه برای آموزش عمومی و تاریخی تهیه شده است و دستور ساخت یا استفاده از مواد منفجره را ارائه نمی‌کند.</p>`}
+];
+let index=0;
+const slideEl=document.getElementById('slide'), counter=document.getElementById('counter'), section=document.getElementById('section'), progress=document.getElementById('progress'), prev=document.getElementById('prev'), next=document.getElementById('next');
+const faNum=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+let lastIndex=0;
+const illustrations=['dynamite','mountain','nobel','history','atom','shield','tunnel','balance','warning','medal','machine','future'];
+function art(kind){
+ const shell=(inner)=>`<svg viewBox="0 0 420 460" role="img" aria-label="تصویر مفهومی ${kind}" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="glow"><stop stop-color="#a855f7" stop-opacity=".48"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></radialGradient><linearGradient id="red" x2="1" y2="0"><stop stop-color="#7f1d1d"/><stop offset=".45" stop-color="#ef4444"/><stop offset="1" stop-color="#991b1b"/></linearGradient></defs><circle cx="210" cy="220" r="192" fill="url(#glow)"/><circle cx="210" cy="220" r="168" fill="none" stroke="#a855f7" stroke-opacity=".22" stroke-width="2"/>${inner}</svg>`;
+ const dynamite=`<g transform="translate(60 70) rotate(-12 150 160)"><rect x="45" y="105" width="85" height="220" rx="18" fill="url(#red)"/><rect x="125" y="80" width="85" height="245" rx="18" fill="url(#red)"/><rect x="205" y="105" width="85" height="220" rx="18" fill="url(#red)"/><rect x="38" y="172" width="260" height="65" rx="8" fill="#e9d5ff"/><text x="168" y="216" font-family="sans-serif" font-weight="900" font-size="36" fill="#4c1d70" text-anchor="middle">DYNAMITE</text><path d="M167 78 Q135 25 195 15" fill="none" stroke="#fbbf24" stroke-width="7" stroke-linecap="round"/><path d="M195 15l-13 -12m13 12 17 -8m-17 8 3 19" stroke="#fbbf24" stroke-width="7" stroke-linecap="round"/></g>`;
+ const mountain=`<path d="M25 350 142 145 217 270 283 95 400 350Z" fill="#6d28d9" stroke="#e9d5ff" stroke-width="6"/><path d="m100 220 42 -75 38 68m72 -64 31 -54 40 80" fill="none" stroke="#f5d0fe" stroke-width="12"/><path d="M70 380H355" stroke="#c084fc" stroke-width="14" stroke-linecap="round"/>`;
+ const nobel=`<circle cx="210" cy="165" r="75" fill="#e9b98c"/><path d="M133 160q-18-125 95-95 75 12 59 99-30-39-52-48-50 32-102 44" fill="#ddd6fe"/><path d="M155 188q55 90 111 0-6 86-56 86-51 0-55-86" fill="#e8e0d9"/><path d="M75 398q0-115 135-120 135 5 135 120" fill="#4c1d95"/><path d="M173 287l37 85 37-85" fill="#fff"/>`;
+ const atom=`<g fill="none" stroke="#c084fc" stroke-width="9"><ellipse cx="210" cy="220" rx="150" ry="62"/><ellipse cx="210" cy="220" rx="150" ry="62" transform="rotate(60 210 220)"/><ellipse cx="210" cy="220" rx="150" ry="62" transform="rotate(120 210 220)"/></g><circle cx="210" cy="220" r="32" fill="#f472b6"/>`;
+ const shield=`<path d="M210 58 348 105v110q-4 116-138 185Q76 331 72 215V105Z" fill="#5b21b6" stroke="#e9d5ff" stroke-width="9"/><path d="m135 226 52 50 102-115" fill="none" stroke="#86efac" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>`;
+ const tunnel=`<path d="M25 370V220Q210-90 395 220v150" fill="#6d28d9" stroke="#d8b4fe" stroke-width="8"/><path d="M110 370V228Q210 58 310 228v142" fill="#0b0712"/><path d="M155 370 195 240h30l40 130" stroke="#fbbf24" stroke-width="8" fill="none"/><path d="M110 370h200" stroke="#c084fc" stroke-width="8"/>`;
+ const balance=`<path d="M210 90v290M110 380h200M90 150h240" stroke="#e9d5ff" stroke-width="12" stroke-linecap="round"/><path d="m90 150-52 120h104Zm240 0-52 120h104Z" fill="#a855f7" stroke="#f5d0fe" stroke-width="5"/><circle cx="210" cy="90" r="22" fill="#fbbf24"/>`;
+ const warning=`<path d="M210 65 390 370H30Z" fill="#f59e0b" stroke="#fde68a" stroke-width="9" stroke-linejoin="round"/><path d="M210 155v115" stroke="#28112e" stroke-width="25" stroke-linecap="round"/><circle cx="210" cy="320" r="15" fill="#28112e"/>`;
+ const medal=`<circle cx="210" cy="230" r="122" fill="#eab308" stroke="#fef08a" stroke-width="13"/><circle cx="210" cy="230" r="95" fill="none" stroke="#a16207" stroke-width="5"/><path d="m150 65 60 70 60-70" fill="none" stroke="#c084fc" stroke-width="42"/><text x="210" y="253" font-size="52" font-family="serif" font-weight="bold" fill="#713f12" text-anchor="middle">N</text>`;
+ const machine=`<g fill="#7c3aed" stroke="#e9d5ff" stroke-width="6"><rect x="60" y="190" width="300" height="145" rx="20"/><circle cx="120" cy="335" r="38"/><circle cx="300" cy="335" r="38"/><path d="M110 190V95h180v95"/></g><path d="M120 125h170" stroke="#fbbf24" stroke-width="13"/>`;
+ const future=`<circle cx="210" cy="195" r="125" fill="#6d28d9" stroke="#e9d5ff" stroke-width="9"/><path d="M155 225 200 270 278 142" fill="none" stroke="#86efac" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/><path d="M110 365h200" stroke="#c084fc" stroke-width="14" stroke-linecap="round"/>`;
+ const items={dynamite,mountain,nobel,history:dynamite,atom,shield,tunnel,balance,warning,medal,machine,future};return shell(items[kind]||dynamite);
+}
+function render(){
+ const s=slides[index];
+ slideEl.classList.remove('is-forward','is-backward');
+ slideEl.innerHTML=`<div class="slide-layout"><div class="slide-copy"><div class="kicker">${s.tag}</div>${index===0?`<h1>${s.title}</h1>`:`<h2>${s.title}</h2>`}${s.lead?`<p class="lead">${s.lead}</p>`:''}${s.body}</div><div class="slide-visual">${art(illustrations[index])}</div></div>`;
+ void slideEl.offsetWidth;
+ if(index>lastIndex) slideEl.classList.add('is-forward');
+ else if(index<lastIndex) slideEl.classList.add('is-backward');
+ lastIndex=index;
+ counter.textContent=`${faNum(index+1)} از ${faNum(slides.length)}`;
+ section.textContent=`${String(index+1).padStart(2,'0')} — ${String(slides.length).padStart(2,'0')}`;
+ progress.style.width=`${(index+1)/slides.length*100}%`;
+ prev.disabled=index===0;next.disabled=index===slides.length-1;
+ slideEl.scrollTop=0;
+}
+const sfx=document.getElementById('sfx');sfx.volume=.22;
+function playSfx(){try{sfx.pause();sfx.currentTime=0;const promise=sfx.play();if(promise)promise.catch(()=>{});}catch(e){}}
+function go(delta){const nextIndex=Math.max(0,Math.min(slides.length-1,index+delta));if(nextIndex===index)return;index=nextIndex;playSfx();render()}
+prev.addEventListener('click',()=>go(-1));next.addEventListener('click',()=>go(1));
+document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','PageDown','PageUp',' '].includes(e.key)){if(e.key==='ArrowLeft'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(1)}else if(e.key==='ArrowRight'||e.key==='PageUp'){e.preventDefault();go(-1)}}});
+let touchX=null;slideEl.addEventListener('touchstart',e=>touchX=e.changedTouches[0].screenX,{passive:true});slideEl.addEventListener('touchend',e=>{if(touchX===null)return;const d=e.changedTouches[0].screenX-touchX;if(Math.abs(d)>70)go(d<0?1:-1);touchX=null},{passive:true});
+const audio=document.getElementById('audio'), music=document.getElementById('music');
+music.addEventListener('click',async()=>{
+ if(audio.paused){try{await audio.play();music.textContent='قطع آهنگ';music.setAttribute('aria-pressed','true')}catch(err){music.textContent='خطا در پخش آهنگ';music.setAttribute('aria-pressed','false');alert('فایل assets/ghgh.mp3 پیدا نشد یا قابل پخش نیست. فایل MP3 را در پوشه assets کنار index.html قرار بده.')}}else{audio.pause();audio.currentTime=0;music.textContent='وصل آهنگ';music.setAttribute('aria-pressed','false')}
+});
+audio.addEventListener('error',()=>{if(!audio.paused){music.textContent='وصل آهنگ';music.setAttribute('aria-pressed','false')}});
+render();
+</script>
+</body>
+</html>
